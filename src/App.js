@@ -3,15 +3,17 @@ import './App.css';
 import Chat from './Chat';
 import Sidebar from './Sidebar';
 import { Route, Switch ,BrowserRouter as Router} from 'react-router-dom'
-import { useState } from 'react';
+import { useContext } from 'react';
+import Login from './Login';
+import { userContext } from './UserContext';
 
 function App() {
 
-  const [user, setUser] = useState(null);
+  const currentUser = useContext(userContext);
   return (
     <div className="app">
-      {!user ?(
-        <h1>Login</h1>
+      {!currentUser ?(
+        <Login/>
       ) :(
         <div className="app__body">
         <Router>
