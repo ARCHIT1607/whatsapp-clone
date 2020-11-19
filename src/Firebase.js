@@ -11,4 +11,6 @@ import firebase from "firebase";
   });
 
   const db =  firebaseApp.firestore();
-  export  {firebaseApp, db};
+  const auth = firebase.auth();
+  export  {firebaseApp, auth};
+  export default db;
