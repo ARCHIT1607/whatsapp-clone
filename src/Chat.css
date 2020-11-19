@@ -43,7 +43,8 @@ padding-left: 20px;
 
 .chat__reciever{
 margin-left: auto;
-background-color: #dcf8c6;
+background-color: #dcf8c6 !important; 
+
 }
 
 .chat__message{
