@@ -51,3 +51,9 @@ margin-left: 10px;
     color: gray;
     padding: 10px;
 }
+
+.sidebar__chats{
+    flex:1;
+    overflow: scroll;
+    background-color:white;
+}
