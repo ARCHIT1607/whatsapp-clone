@@ -11,9 +11,14 @@
     padding: 20px;
     border-right: 1px solid lightgray;
 }
+
+.sidebar__header > .MuiAvatar-root{
+    margin-top: 10px !important;
+}
+
 .sidebar__header > p{
-    font-size: 14px;
-    padding-top: 8px;
+    font-size: 18px;
+    margin-top: 18px;
 }
 .sidebar__headerRight{
     display: flex;

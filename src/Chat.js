@@ -65,7 +65,6 @@ function Chat() {
         }
     }
 
-
     return (
         <div className="chat">
             <div className="chat__header">
@@ -94,13 +93,19 @@ function Chat() {
             </div>
 
             <div className="chat__body">
-                {messages.map((message) => (
+                {/* {messages.map((message) => (
                     <p className={`chat__message ${message.sender === currentUser.email && "chat__reciever"}`}><span className="chat__name">{message.sender?message.sender:message.reciever}</span>{message.message}
                         <span className="chat__timestamp">{new Date(message.timestamp?.toDate()).toUTCString()}</span>
                     </p>
-                ))}
-
-
+                ))} */}
+                {
+                    (currentUser.email === roomOwner || currentUser.email ===partner)?
+                    messages.map((message) => (
+                        <p className={`chat__message ${message.sender === currentUser.email && "chat__reciever"}`}><span className="chat__name">{message.sender?message.sender:message.reciever}</span>{message.message}
+                            <span className="chat__timestamp">{new Date(message.timestamp?.toDate()).toUTCString()}</span>
+                        </p>
+                    )):<p></p>
+                }
             </div>
 
             <div className="chat__footer">

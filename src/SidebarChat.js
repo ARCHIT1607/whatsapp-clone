@@ -40,6 +40,7 @@ function SideBarChat({ addNewChat, id, name }) {
                 <p>{messages[0]?.message}</p>
             </div>
         </div>
+        
         </Link>
     ) : (
             <div onClick={createChat} className="sidebarChat">
