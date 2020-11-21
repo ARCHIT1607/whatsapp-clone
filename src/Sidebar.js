@@ -43,7 +43,7 @@ function Sidebar() {
                 <p>{currentUser.displayName}</p>
                 <div className="sidebar__headerRight">
                     <IconButton>
-                        <Button onClick={logout}>Logout</Button>
+                        <Button onClick={logout} variant="contained" color="secondary">Logout</Button>
                     </IconButton>
                     <IconButton>
                         <ChatIcon />
@@ -56,17 +56,19 @@ function Sidebar() {
             <div className="sidebar__search">
                 <div className ="sidebar__searchContainer">
                 <SearchOutlinedIcon/>
-                <input placeholder = "Start new chat"  type ="text"/>
+                <input placeholder = "Start New Room"  type ="text"/>
                 </div>
             </div>
 
             <div className="sidebar__chats">
                 <SideBarChat addNewChat />
-                {
+                {  
+                    
                     rooms.map(room =>(
-                        <SideBarChat key ={room.id} id={room.id} name={room.data.name}/>
-                    ))
-                    }
+                        (currentUser.email === room.data.partner || currentUser.email === room.data.roomOwner)?
+                        <SideBarChat key ={room.id} id={room.id} name={room.data.name}/>:<p></p>
+                        ))
+                }
             </div>
         </div>
     )
