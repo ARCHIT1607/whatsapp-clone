@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import './Sidebar.css'
 import { Avatar, IconButton } from "@material-ui/core";
-import DonutLargeIcon from '@material-ui/icons/DonutLarge';
+import { Button } from "@material-ui/core";
 import ChatIcon from '@material-ui/icons/Chat';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import SideBarChat from './SideBarChat';
 import db from './Firebase';
 import { userContext } from './UserContext';
+import firebase from 'firebase';
 
 function Sidebar() {
 
@@ -30,7 +31,9 @@ function Sidebar() {
       }
     }, [])
 
-
+    const logout = () => {
+        firebase.auth().signOut();
+    }
 
 
     return (
@@ -40,7 +43,7 @@ function Sidebar() {
                 <p>{currentUser.displayName}</p>
                 <div className="sidebar__headerRight">
                     <IconButton>
-                        <DonutLargeIcon />
+                        <Button onClick={logout}>Logout</Button>
                     </IconButton>
                     <IconButton>
                         <ChatIcon />

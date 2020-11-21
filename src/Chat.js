@@ -31,8 +31,8 @@ function Chat() {
         if (roomId) {
             db.collection("rooms").doc(roomId).onSnapshot((snapshot) => (
                 (setRoomName(snapshot.data().name),
-                    (setRoomOwner(snapshot.data().roomOwner
-                    )
+                    (setRoomOwner(snapshot.data().roomOwner),
+                    (setPartner(snapshot.data().partner))
                     ))));
 
             db.collection("rooms").doc(roomId).collection("messages").orderBy('timestamp', 'asc').onSnapshot(snapshot => (setMessages(snapshot.docs.map(doc => doc.data()))))
@@ -45,7 +45,7 @@ function Chat() {
             db.collection("rooms").doc(roomId).collection("messages").add({
                 sender: currentUser.email,
                 roomOwner: roomOwner,
-                reciever:partner,
+                reciever:currentUser.email===roomOwner?partner:roomOwner,
                 message: input,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
 
@@ -95,7 +95,7 @@ function Chat() {
 
             <div className="chat__body">
                 {messages.map((message) => (
-                    <p className={`chat__message ${message.name === currentUser.displayName && "chat__reciever"}`}><span className="chat__name">{message.name}</span>{message.message}
+                    <p className={`chat__message ${message.sender === currentUser.email && "chat__reciever"}`}><span className="chat__name">{message.sender?message.sender:message.reciever}</span>{message.message}
                         <span className="chat__timestamp">{new Date(message.timestamp?.toDate()).toUTCString()}</span>
                     </p>
                 ))}
