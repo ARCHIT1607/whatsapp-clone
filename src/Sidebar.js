@@ -55,8 +55,8 @@ function Sidebar() {
             </div>
             <div className="sidebar__search">
                 <div className ="sidebar__searchContainer">
-                <SearchOutlinedIcon/>
-                <input placeholder = "Start New Room"  type ="text"/>
+                {/* <SearchOutlinedIcon/> */}
+                {/* <input placeholder = "Start New Room"  type ="text"/> */}
                 </div>
             </div>
 

@@ -4,12 +4,15 @@ import { Avatar, IconButton } from "@material-ui/core";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
+import PersonIcon from '@material-ui/icons/Person';
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
+import AddIcon from '@material-ui/icons/Add';
 import MicIcon from '@material-ui/icons/Mic';
 import { useParams } from 'react-router-dom';
 import db from './Firebase';
 import { userContext } from './UserContext';
 import firebase from "firebase";
+
 
 function Chat() {
 
@@ -20,7 +23,7 @@ function Chat() {
     const [seed, setSeed] = useState('');
     const [input, setInput] = useState('');
     const [messages, setMessages] = useState(['']);
-    const [partner, setPartner] = useState("")
+    const [friend, setFriend] = useState('')
     
 
     useEffect(() => {
@@ -32,7 +35,7 @@ function Chat() {
             db.collection("rooms").doc(roomId).onSnapshot((snapshot) => (
                 (setRoomName(snapshot.data().name),
                     (setRoomOwner(snapshot.data().roomOwner),
-                    (setPartner(snapshot.data().partner))
+                    (setFriend(snapshot.data().partner))
                     ))));
 
             db.collection("rooms").doc(roomId).collection("messages").orderBy('timestamp', 'asc').onSnapshot(snapshot => (setMessages(snapshot.docs.map(doc => doc.data()))))
@@ -41,17 +44,17 @@ function Chat() {
 
     const sendMessage = (e) => {
         e.preventDefault();
-        if (roomId && input.length > 0) {
+        if (roomId && input.length > 0 && friend) {
             db.collection("rooms").doc(roomId).collection("messages").add({
                 sender: currentUser.email,
                 roomOwner: roomOwner,
-                reciever:currentUser.email===roomOwner?partner:roomOwner,
+                reciever:currentUser.email===roomOwner?friend:roomOwner,
                 message: input,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
 
             })
         } else {
-            alert("create a room or say something")
+            alert("create a room or add a friend")
         }
         setInput('');
     }
@@ -81,14 +84,14 @@ function Chat() {
                 </div>
                 <div className="chat__headerRight">
                     <IconButton>
-                        <SearchOutlinedIcon onClick={addPartner}/>
+                        <PersonIcon onClick={addPartner}/>
                     </IconButton>
-                    <IconButton>
+                    {/* <IconButton>
                         <AttachFileIcon />
                     </IconButton>
                     <IconButton>
                         <MoreVertIcon />
-                    </IconButton>
+                    </IconButton> */}
                 </div>
             </div>
 
@@ -99,7 +102,7 @@ function Chat() {
                     </p>
                 ))} */}
                 {
-                    (currentUser.email === roomOwner || currentUser.email ===partner)?
+                    (currentUser.email === roomOwner || currentUser.email ===friend)?
                     messages.map((message) => (
                         <p className={`chat__message ${message.sender === currentUser.email && "chat__reciever"}`}><span className="chat__name">{message.sender?message.sender:message.reciever}</span>{message.message}
                             <span className="chat__timestamp">{new Date(message.timestamp?.toDate()).toUTCString()}</span>
@@ -111,7 +114,7 @@ function Chat() {
             <div className="chat__footer">
                 <InsertEmoticonIcon />
                 <form>
-                    <input type="text" placeholder=" type a message" value={input} onChange={(e) => setInput(e.target.value)}
+                    <input type="text" placeholder="Type a message" value={input} onChange={(e) => setInput(e.target.value)}
                     />
                     <button type="submit" onClick={sendMessage}>Send a message</button>
                 </form>
