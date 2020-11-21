@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './SidebarChat.css'
 import { Avatar } from "@material-ui/core";
 import db from './Firebase';
 import { Link } from 'react-router-dom';
+import { userContext } from './UserContext';
 
 function SideBarChat({ addNewChat, id, name }) {
+    const currentUser = useContext(userContext);
     const [seed, setSeed] = useState('')
     const [messages, setMessages] = useState([]);
 
@@ -23,7 +25,8 @@ function SideBarChat({ addNewChat, id, name }) {
 
         if(roomName){
             db.collection("rooms").add({
-                name:roomName
+                name:roomName,
+                roomOwner:currentUser.email
             })
         }
     }
