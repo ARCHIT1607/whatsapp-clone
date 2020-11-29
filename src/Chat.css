@@ -56,6 +56,21 @@ background-color: #dcf8c6 !important;
     width: fit-content;
     margin-bottom: 30px;
 }
+
+.chat__imageReciever{
+    position: relative;
+    font-size: 16px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+    width: fit-content;
+    margin-bottom: 30px;
+}
+
+.chat__imageSender{
+    float: right;
+    background-color: #dcf8c6 !important;
+}
 .chat__timestamp{
     margin-left: 10px;
     font-size: xx-small;
@@ -73,6 +88,7 @@ background-color: #dcf8c6 !important;
     align-items: center;
     height: 62px;
     border-top: 1px solid lightgray;
+    width: 90%;
 }
 
 .chat__footer >form{

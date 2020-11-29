@@ -12,6 +12,7 @@ import { useParams } from 'react-router-dom';
 import db from './Firebase';
 import { userContext } from './UserContext';
 import firebase from "firebase";
+import ImageUpload from './ImageUpload';
 
 
 function Chat() {
@@ -104,21 +105,30 @@ function Chat() {
                 {
                     (currentUser.email === roomOwner || currentUser.email ===friend)?
                     messages.map((message) => (
-                        <p className={`chat__message ${message.sender === currentUser.email && "chat__reciever"}`}><span className="chat__name">{message.sender?message.sender:message.reciever}</span>{message.message}
+                        <>
+                        {message.message?(
+                            <p className={`chat__message ${message.sender === currentUser.email && "chat__reciever"}`}><span className="chat__name">{message.sender?message.sender:message.reciever}</span>{message.message}
                             <span className="chat__timestamp">{new Date(message.timestamp?.toDate()).toUTCString()}</span>
                         </p>
+                        ):(
+                            <>
+                            <span className="chat__name">{message.sender?message.sender:message.reciever}</span>
+                            <img src={message.imageUrl} alt="" className={`chat__imageReciever ${message.sender === currentUser.email && "chat__imageSender"}`} />
+
+                            </>
+                        )}
+                        </>
                     )):<p></p>
                 }
             </div>
 
             <div className="chat__footer">
-                <InsertEmoticonIcon />
                 <form>
                     <input type="text" placeholder="Type a message" value={input} onChange={(e) => setInput(e.target.value)}
                     />
                     <button type="submit" onClick={sendMessage}>Send a message</button>
                 </form>
-                <MicIcon />
+                <ImageUpload roomId={roomId} roomOwner={roomOwner} friend={friend}/>
             </div>
         </div>
     )

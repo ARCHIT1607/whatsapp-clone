@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "whatsapp-v1": "whatsapp-v1-7b1d7",
+    "default": "whatsapp-v1-7b1d7"
+  }
+}

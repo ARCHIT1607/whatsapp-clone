@@ -12,5 +12,6 @@ import firebase from "firebase";
 
   const db =  firebaseApp.firestore();
   const auth = firebase.auth();
-  export  {firebaseApp, auth};
+  const storage = firebase.storage();
+  export  {firebaseApp, auth, storage};
   export default db;
